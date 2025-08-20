@@ -13,24 +13,31 @@ struct TasksView: View {
         Task(title: "Brush teeth", priority: .urgent, isCompleted: true),
         Task(title: "walk dog", priority: .optional)
     ]
+    
+    @State private var showAddTaskView: Bool = false
+    
     var body: some View {
         NavigationStack {
-                List {
-                    ForEach(tasks) { task in
-                        TaskView(task: task)
-                    }
+            List {
+                ForEach(tasks) { task in
+                    TaskView(task: task)
                 }
+            }
             .navigationTitle("Tasks")
             .toolbar {
                 Button {
-                    print("added task")
+                    showAddTaskView.toggle()
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 22))
                         .foregroundStyle(.black)
                 }
-
+                
             }
+        }
+        .sheet(isPresented: $showAddTaskView) {
+            AddTaskView()
+                .presentationDetents([.height(300)])
         }
     }
 }

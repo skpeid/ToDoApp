@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-enum TaskPriority {
+enum TaskPriority: CaseIterable, Identifiable {
+    
+    var id: Self { self }
+    
     case normal
     case urgent
     case optional
