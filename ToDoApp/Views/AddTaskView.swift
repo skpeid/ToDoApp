@@ -11,6 +11,10 @@ struct AddTaskView: View {
     @State var title: String = ""
     @State var selectedPriority: TaskPriority = .normal
     
+    @Binding var tasks: [Task]
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Task Title")
@@ -30,7 +34,9 @@ struct AddTaskView: View {
             }
             .padding(.bottom)
             Button {
-                print("")
+                let newTask = Task(title: title, priority: selectedPriority)
+                tasks.append(newTask)
+                dismiss()
             } label: {
                 Text("Add Task")
                     .frame(maxWidth: .infinity)
@@ -48,5 +54,5 @@ struct AddTaskView: View {
 }
 
 #Preview {
-    AddTaskView()
+    AddTaskView(tasks: .constant([]))
 }

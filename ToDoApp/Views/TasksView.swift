@@ -26,7 +26,7 @@ struct TasksView: View {
             .navigationTitle("Tasks")
             .toolbar {
                 Button {
-                    showAddTaskView.toggle()
+                    showAddTaskView = true
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 22))
@@ -36,7 +36,7 @@ struct TasksView: View {
             }
         }
         .sheet(isPresented: $showAddTaskView) {
-            AddTaskView()
+            AddTaskView(tasks: $tasks)
                 .presentationDetents([.height(300)])
         }
     }
