@@ -20,7 +20,15 @@ struct TasksView: View {
         NavigationStack {
             List {
                 ForEach(tasks) { task in
-                    TaskView(task: task)
+                    Button {
+                        if let taskIndex = tasks.firstIndex(of: task) {
+                            tasks[taskIndex] = toggleTask(task)
+                        }
+                    } label: {
+                        TaskView(task: task)
+                            .foregroundStyle(.black)
+                    }
+
                 }
                 .onDelete(perform: delete)
             }
@@ -40,6 +48,10 @@ struct TasksView: View {
             AddTaskView(tasks: $tasks)
                 .presentationDetents([.height(300)])
         }
+    }
+    
+    private func toggleTask(_ task: Task) -> Task {
+        return Task(title: task.title, priority: task.priority, isCompleted: !task.isCompleted)
     }
     
     private func delete(at offsets: IndexSet) {
