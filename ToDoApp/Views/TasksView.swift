@@ -22,6 +22,7 @@ struct TasksView: View {
                 ForEach(tasks) { task in
                     TaskView(task: task)
                 }
+                .onDelete(perform: delete)
             }
             .navigationTitle("Tasks")
             .toolbar {
@@ -39,6 +40,10 @@ struct TasksView: View {
             AddTaskView(tasks: $tasks)
                 .presentationDetents([.height(300)])
         }
+    }
+    
+    private func delete(at offsets: IndexSet) {
+        tasks.remove(atOffsets: offsets)
     }
 }
 
