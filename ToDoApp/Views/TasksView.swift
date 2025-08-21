@@ -19,11 +19,9 @@ struct TasksView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(tasks) { task in
+                ForEach($tasks) { $task in
                     Button {
-                        if let taskIndex = tasks.firstIndex(of: task) {
-                            tasks[taskIndex] = toggleTask(task)
-                        }
+                        task.isCompleted.toggle()
                     } label: {
                         TaskView(task: task)
                             .foregroundStyle(.black)
@@ -48,10 +46,6 @@ struct TasksView: View {
             AddTaskView(tasks: $tasks)
                 .presentationDetents([.height(300)])
         }
-    }
-    
-    private func toggleTask(_ task: Task) -> Task {
-        return Task(title: task.title, priority: task.priority, isCompleted: !task.isCompleted)
     }
     
     private func delete(at offsets: IndexSet) {
